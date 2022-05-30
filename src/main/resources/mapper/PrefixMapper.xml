@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.PrefixMapper">
+
+    <resultMap id="PrefixMapper" type="com.tencent.wxcloudrun.model.Prefix">
+        <id property="id" column="id"/>
+        <result property="affix" column="affix"/>
+        <result property="translation" column="translation"/>
+        <result property="example" column="example"/>
+        <result property="category" column="category"/>
+        <result property="note" column="note"/>
+        <result property="createdAt" column="createdAt" javaType="java.time.LocalDateTime" />
+        <result property="updatedAt" column="updatedAt" javaType="java.time.LocalDateTime"  />
+    </resultMap>
+
+    <select id="getPrefixList" resultMap="PrefixMapper" >
+        SELECT *
+        FROM Prefix
+        <where>
+            <if test="filters!=null &amp;&amp; filtersJSON.category[0]==null">
+                category is null
+                <if test="keyword!=null">
+                    and
+                </if>
+            </if>
+            <if test="filters!=null &amp;&amp; filtersJSON.category[0]!=null">
+                category in 
+                <foreach collection="filtersJSON.category" item="id" index="index" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+                <if test="keyword!=null">
+                    and
+                </if>
+            </if>
+            <if test="keyword!=null">
+                (affix like "%"#{keyword}"%" or translation like "%"#{keyword}"%")
+            </if>
+        </where>
+        ORDER BY affix
+        limit #{start}, #{size}
+    </select>
+
+    <select id="getPrefixListCount" resultType="java.lang.Integer" >
+        select
+            COUNT(1)
+        from Prefix
+        <where>
+            <if test="filters!=null &amp;&amp; filtersJSON.category[0]==null">
+                category is null
+                <if test="keyword!=null">
+                    and
+                </if>
+            </if>
+            <if test="filters!=null &amp;&amp; filtersJSON.category[0]!=null">
+                category in
+                <foreach collection="filtersJSON.category" item="id" index="index" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+                <if test="keyword!=null">
+                    and
+                </if>
+            </if>
+            <if test="keyword!=null">
+                (affix like "%"#{keyword}"%" or translation like "%"#{keyword}"%")
+            </if>
+        </where>
+    </select>
+
+    <update id="insertPrefix">
+        INSERT INTO Prefix(affix,translation,example,category,note)
+            VALUE(#{affix}, #{translation}, #{example}, #{category}, #{note})
+    </update>
+
+    <update id="editPrefix">
+        UPDATE Prefix
+        SET affix=#{affix}, translation=#{translation},example=#{example},category=#{category},note=#{note}
+        WHERE id = #{id}
+    </update>
+
+    <update id="deletePrefix" parameterType="java.lang.Integer">
+        DELETE
+        FROM Prefix
+        WHERE id = #{id}
+    </update>
+
+</mapper>

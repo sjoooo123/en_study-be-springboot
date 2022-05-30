@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.CategoryMapper">
+
+    <resultMap id="CategoryMapper" type="com.tencent.wxcloudrun.model.Category">
+        <id property="id" column="id"/>
+        <result property="pid" column="pid"/>
+        <result property="type" column="type"/>
+        <result property="name" column="name"/>
+        <result property="sort" column="sort"/>
+        <result property="createdAt" column="createdAt" javaType="java.time.LocalDateTime" />
+        <result property="updatedAt" column="updatedAt" javaType="java.time.LocalDateTime"  />
+    </resultMap>
+
+    <select id="getCategoryList" resultMap="CategoryMapper">
+        SELECT *
+        FROM Category
+        order by sort
+    </select>
+
+    <update id="insertCategory">
+        INSERT INTO Category(pid,type,name,sort)
+            VALUE(#{pid}, #{type}, #{name}, #{sort})
+    </update>
+
+    <update id="editCategory">
+        UPDATE Category
+        SET pid=#{pid}, type=#{type}, name=#{name}, sort=#{sort}
+        WHERE id = #{id}
+    </update>
+
+    <update id="deleteCategory" parameterType="java.lang.Integer">
+        DELETE
+        FROM Category
+        WHERE id = #{id}
+    </update>
+</mapper>

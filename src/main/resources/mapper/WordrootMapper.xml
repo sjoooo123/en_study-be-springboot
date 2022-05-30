@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.WordrootMapper">
+
+    <resultMap id="WordrootMapper" type="com.tencent.wxcloudrun.model.Wordroot">
+        <id property="id" column="id"/>
+        <result property="wordroot" column="wordroot"/>
+        <result property="mean" column="mean"/>
+        <result property="translation" column="translation"/>
+        <result property="example" column="example"/>
+        <result property="category" column="category"/>
+        <result property="note" column="note"/>
+        <result property="createdAt" column="createdAt" javaType="java.time.LocalDateTime" />
+        <result property="updatedAt" column="updatedAt" javaType="java.time.LocalDateTime"  />
+    </resultMap>
+
+    <select id="getWordrootList" resultMap="WordrootMapper" >
+        SELECT *
+        FROM Wordroot
+        <where>
+            <if test="filters!=null &amp;&amp; filtersJSON.category[0]==null">
+                category is null
+                <if test="keyword!=null">
+                    and
+                </if>
+            </if>
+            <if test="filters!=null &amp;&amp; filtersJSON.category[0]!=null">
+                category in
+                <foreach collection="filtersJSON.category" item="id" index="index" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+                <if test="keyword!=null">
+                    and
+                </if>
+            </if>
+            <if test="keyword!=null">
+                (wordroot like "%"#{keyword}"%" or mean like "%"#{keyword}"%" or translation like "%"#{keyword}"%")
+            </if>
+        </where>
+        ORDER BY wordroot
+        limit #{start}, #{size}
+    </select>
+
+    <select id="getWordrootListCount" resultType="java.lang.Integer" >
+        select
+            COUNT(1)
+        from Wordroot
+        <where>
+            <if test="filters!=null &amp;&amp; filtersJSON.category[0]==null">
+                category is null
+                <if test="keyword!=null">
+                    and
+                </if>
+            </if>
+            <if test="filters!=null &amp;&amp; filtersJSON.category[0]!=null">
+                category in
+                <foreach collection="filtersJSON.category" item="id" index="index" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+                <if test="keyword!=null">
+                    and
+                </if>
+            </if>
+            <if test="keyword!=null">
+                (wordroot like "%"#{keyword}"%" or mean like "%"#{keyword}"%" or translation like "%"#{keyword}"%")
+            </if>
+        </where>
+    </select>
+
+    <update id="insertWordroot">
+        INSERT INTO Wordroot(wordroot,mean,translation,example,category,note)
+            VALUE(#{wordroot}, #{mean}, #{translation}, #{example}, #{category}, #{note})
+    </update>
+
+    <update id="editWordroot">
+        UPDATE Wordroot
+        SET wordroot=#{wordroot},mean=#{mean},translation=#{translation},example=#{example},category=#{category},note=#{note}
+        WHERE id = #{id}
+    </update>
+
+    <update id="deleteWordroot" parameterType="java.lang.Integer">
+        DELETE
+        FROM Wordroot
+        WHERE id = #{id}
+    </update>
+
+</mapper>
