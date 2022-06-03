@@ -8,6 +8,7 @@
         <result property="type" column="type"/>
         <result property="name" column="name"/>
         <result property="sort" column="sort"/>
+        <result property="note" column="note"/>
         <result property="createdAt" column="createdAt" javaType="java.time.LocalDateTime" />
         <result property="updatedAt" column="updatedAt" javaType="java.time.LocalDateTime"  />
     </resultMap>
@@ -19,13 +20,13 @@
     </select>
 
     <update id="insertCategory">
-        INSERT INTO Category(pid,type,name,sort)
-            VALUE(#{pid}, #{type}, #{name}, #{sort})
+        INSERT INTO Category(pid,type,name,sort,note)
+            VALUE(#{pid}, #{type}, #{name}, #{sort}, #{note})
     </update>
 
     <update id="editCategory">
         UPDATE Category
-        SET pid=#{pid}, type=#{type}, name=#{name}, sort=#{sort}
+        SET pid=#{pid}, type=#{type}, name=#{name}, sort=#{sort}, note=#{note}
         WHERE id = #{id}
     </update>
 

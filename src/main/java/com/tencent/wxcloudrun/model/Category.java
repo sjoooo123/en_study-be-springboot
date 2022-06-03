@@ -12,6 +12,8 @@ public class Category extends TreeItem {
   private String type;
   // 排序码
   private Integer sort = 0;
+  // 备注
+  private String note;
 
   private LocalDateTime createdAt;
 
