@@ -1,6 +1,7 @@
 package com.tencent.wxcloudrun.model;
 
 import lombok.Data;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -19,6 +20,8 @@ public class Wordroot implements Serializable {
   private String example;
 
   private Integer category;
+
+  private String frequency;
 
   private String note;
 

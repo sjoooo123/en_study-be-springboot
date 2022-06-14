@@ -9,6 +9,7 @@
         <result property="translation" column="translation"/>
         <result property="example" column="example"/>
         <result property="category" column="category"/>
+        <result property="frequency" column="frequency"/>
         <result property="note" column="note"/>
         <result property="createdAt" column="createdAt" javaType="java.time.LocalDateTime" />
         <result property="updatedAt" column="updatedAt" javaType="java.time.LocalDateTime"  />
@@ -18,17 +19,32 @@
         SELECT *
         FROM Wordroot
         <where>
-            <if test="filters!=null &amp;&amp; filtersJSON.category[0]==null">
-                category is null
-                <if test="keyword!=null">
-                    and
+            <if test="filters!=null">
+                <if test="filtersJSON.category">
+                    <if test="filtersJSON.category[0]==null">
+                        category is null
+                    </if>
+                    <if test="filtersJSON.category[0]!=null">
+                        category in
+                        <foreach collection="filtersJSON.category" item="id" index="index" open="(" close=")" separator=",">
+                            #{id}
+                        </foreach>
+                    </if>
+                    <if test="filtersJSON.frequency">
+                        and
+                    </if>
                 </if>
-            </if>
-            <if test="filters!=null &amp;&amp; filtersJSON.category[0]!=null">
-                category in
-                <foreach collection="filtersJSON.category" item="id" index="index" open="(" close=")" separator=",">
-                    #{id}
-                </foreach>
+                <if test="filtersJSON.frequency">
+                    <if test="filtersJSON.frequency[0]==null">
+                        frequency is null
+                    </if>
+                    <if test="filtersJSON.frequency[0]!=null">
+                        frequency in
+                        <foreach collection="filtersJSON.frequency" item="id" index="index" open="(" close=")" separator=",">
+                            #{id}
+                        </foreach>
+                    </if>
+                </if>
                 <if test="keyword!=null">
                     and
                 </if>
@@ -46,17 +62,32 @@
             COUNT(1)
         from Wordroot
         <where>
-            <if test="filters!=null &amp;&amp; filtersJSON.category[0]==null">
-                category is null
-                <if test="keyword!=null">
-                    and
+            <if test="filters!=null">
+                <if test="filtersJSON.category">
+                    <if test="filtersJSON.category[0]==null">
+                        category is null
+                    </if>
+                    <if test="filtersJSON.category[0]!=null">
+                        category in
+                        <foreach collection="filtersJSON.category" item="id" index="index" open="(" close=")" separator=",">
+                            #{id}
+                        </foreach>
+                    </if>
+                    <if test="filtersJSON.frequency">
+                        and
+                    </if>
                 </if>
-            </if>
-            <if test="filters!=null &amp;&amp; filtersJSON.category[0]!=null">
-                category in
-                <foreach collection="filtersJSON.category" item="id" index="index" open="(" close=")" separator=",">
-                    #{id}
-                </foreach>
+                <if test="filtersJSON.frequency">
+                    <if test="filtersJSON.frequency[0]==null">
+                        frequency is null
+                    </if>
+                    <if test="filtersJSON.frequency[0]!=null">
+                        frequency in
+                        <foreach collection="filtersJSON.frequency" item="id" index="index" open="(" close=")" separator=",">
+                            #{id}
+                        </foreach>
+                    </if>
+                </if>
                 <if test="keyword!=null">
                     and
                 </if>
@@ -68,13 +99,13 @@
     </select>
 
     <update id="insertWordroot">
-        INSERT INTO Wordroot(wordroot,mean,translation,example,category,note)
-            VALUE(#{wordroot}, #{mean}, #{translation}, #{example}, #{category}, #{note})
+        INSERT INTO Wordroot(wordroot,mean,translation,example,category,frequency,note)
+            VALUE(#{wordroot}, #{mean}, #{translation}, #{example}, #{category}, #{frequency}, #{note})
     </update>
 
     <update id="editWordroot">
         UPDATE Wordroot
-        SET wordroot=#{wordroot},mean=#{mean},translation=#{translation},example=#{example},category=#{category},note=#{note}
+        SET wordroot=#{wordroot},mean=#{mean},translation=#{translation},example=#{example},category=#{category},frequency=#{frequency},note=#{note}
         WHERE id = #{id}
     </update>
 
