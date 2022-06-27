@@ -18,6 +18,8 @@ public class Suffix implements Serializable {
 
   private Integer category;
 
+  private String frequency;
+
   private String note;
 
   private LocalDateTime createdAt;
