@@ -9,8 +9,6 @@ public interface PrefixService {
 
   List<Prefix> getPrefixList(PageRequest request);
 
-  Integer getPrefixListCount(PageRequest request);
-
   void insertPrefix(Prefix prefix);
 
   void editPrefix(Prefix prefix);

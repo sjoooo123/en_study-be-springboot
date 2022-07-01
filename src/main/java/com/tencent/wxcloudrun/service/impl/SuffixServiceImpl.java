@@ -24,11 +24,6 @@ public class SuffixServiceImpl implements SuffixService {
   }
 
   @Override
-  public Integer getSuffixListCount(PageRequest request) {
-    return suffixMapper.getSuffixListCount(request);
-  }
-
-  @Override
   public void insertSuffix(Suffix suffix) {
     suffixMapper.insertSuffix(suffix);
   }

@@ -54,48 +54,6 @@
             </if>
         </where>
         ORDER BY wordroot
-        limit #{start}, #{size}
-    </select>
-
-    <select id="getWordrootListCount" resultType="java.lang.Integer" >
-        select
-            COUNT(1)
-        from Wordroot
-        <where>
-            <if test="filters!=null">
-                <if test="filtersJSON.category">
-                    <if test="filtersJSON.category[0]==null">
-                        category is null
-                    </if>
-                    <if test="filtersJSON.category[0]!=null">
-                        category in
-                        <foreach collection="filtersJSON.category" item="id" index="index" open="(" close=")" separator=",">
-                            #{id}
-                        </foreach>
-                    </if>
-                    <if test="filtersJSON.frequency">
-                        and
-                    </if>
-                </if>
-                <if test="filtersJSON.frequency">
-                    <if test="filtersJSON.frequency[0]==null">
-                        frequency is null
-                    </if>
-                    <if test="filtersJSON.frequency[0]!=null">
-                        frequency in
-                        <foreach collection="filtersJSON.frequency" item="id" index="index" open="(" close=")" separator=",">
-                            #{id}
-                        </foreach>
-                    </if>
-                </if>
-                <if test="keyword!=null">
-                    and
-                </if>
-            </if>
-            <if test="keyword!=null">
-                (wordroot like "%"#{keyword}"%" or mean like "%"#{keyword}"%" or translation like "%"#{keyword}"%")
-            </if>
-        </where>
     </select>
 
     <update id="insertWordroot">

@@ -9,8 +9,6 @@ public interface SuffixService {
 
   List<Suffix> getSuffixList(PageRequest request);
 
-  Integer getSuffixListCount(PageRequest request);
-
   void insertSuffix(Suffix suffix);
 
   void editSuffix(Suffix suffix);

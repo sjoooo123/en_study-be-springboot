@@ -24,11 +24,6 @@ public class PrefixServiceImpl implements PrefixService {
   }
 
   @Override
-  public Integer getPrefixListCount(PageRequest request) {
-    return prefixMapper.getPrefixListCount(request);
-  }
-
-  @Override
   public void insertPrefix(Prefix prefix) {
     prefixMapper.insertPrefix(prefix);
   }

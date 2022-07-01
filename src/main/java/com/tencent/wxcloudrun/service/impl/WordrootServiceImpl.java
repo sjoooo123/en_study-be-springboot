@@ -25,11 +25,6 @@ public class WordrootServiceImpl implements WordrootService {
   }
 
   @Override
-  public Integer getWordrootListCount(PageRequest request) {
-    return wordrootMapper.getWordrootListCount(request);
-  }
-
-  @Override
   public void insertWordroot(Wordroot wordroot) {
     wordrootMapper.insertWordroot(wordroot);
   }

@@ -12,8 +12,6 @@ public interface WordrootService {
 
   List<Wordroot> getWordrootList(PageRequest request);
 
-  Integer getWordrootListCount(PageRequest request);
-
   void insertWordroot(Wordroot wordroot);
 
   void editWordroot(Wordroot wordroot);

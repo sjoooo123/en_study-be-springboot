@@ -1,10 +1,13 @@
 package com.tencent.wxcloudrun.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.config.ResultListPage;
 import com.tencent.wxcloudrun.dto.PageRequest;
 import com.tencent.wxcloudrun.model.Suffix;
+import com.tencent.wxcloudrun.model.Wordroot;
 import com.tencent.wxcloudrun.service.SuffixService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,18 +46,20 @@ public class SuffixController {
 
     Integer page = request.getPage();
     Integer size = request.getSize();
-    Integer start = page * size - size;
-    request.setStart(start);
     String filtersStr = request.getFilters();
     if(filtersStr != null){
       Object filters = JSONObject.parse(filtersStr);
       request.setFiltersJSON(filters);
     }
 
-    List<Suffix> suffix = suffixService.getSuffixList(request);
-    Integer total = suffixService.getSuffixListCount(request);
+    // 设置分页查询参数
+    PageHelper.startPage(page, size);
 
-    return ApiResponse.ok(new ResultListPage(suffix, total));
+    // 封装分页查询结果到 PageInfo 对象中以获取相关分页信息
+    List<Suffix> suffix = suffixService.getSuffixList(request);
+    PageInfo pageInfo = new PageInfo(suffix);
+
+    return ApiResponse.ok(new ResultListPage(pageInfo.getList(), pageInfo.getTotal()));
   }
 
   /**
