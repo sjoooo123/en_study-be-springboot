@@ -6,17 +6,19 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class Category extends TreeItem {
+public class Simpleword implements Serializable {
 
-  // 类型，词根，前缀，后缀，单词
-  private String type;
-  // 排序码
-  private Integer sort = 0;
-  // 备注
+  private Integer id;
+
+  private String word;
+
+  private String translation;
+
+  private Integer category;
+
   private String note;
 
   private LocalDateTime createdAt;
 
   private LocalDateTime updatedAt;
 }
-
