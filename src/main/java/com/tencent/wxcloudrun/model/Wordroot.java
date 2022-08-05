@@ -25,6 +25,8 @@ public class Wordroot implements Serializable {
 
   private String note;
 
+  private String source;
+
   private LocalDateTime createdAt;
 
   private LocalDateTime updatedAt;
