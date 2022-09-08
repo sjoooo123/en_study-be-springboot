@@ -24,6 +24,9 @@ public class Prefix implements Serializable {
 
   private String source;
 
+  // 完善程度：0未完善，1完善中，2已为完善
+  private Integer level;
+
   private LocalDateTime createdAt;
 
   private LocalDateTime updatedAt;

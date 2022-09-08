@@ -13,8 +13,6 @@ public class Wordroot implements Serializable {
 
   private String wordroot;
 
-  private String mean;
-
   private String translation;
 
   private String example;
@@ -26,6 +24,11 @@ public class Wordroot implements Serializable {
   private String note;
 
   private String source;
+
+  private String vary;
+
+  // 完善程度：0未完善，1完善中，2已为完善
+  private Integer level;
 
   private LocalDateTime createdAt;
 

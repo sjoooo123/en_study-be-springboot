@@ -5,13 +5,14 @@
     <resultMap id="WordrootMapper" type="com.tencent.wxcloudrun.model.Wordroot">
         <id property="id" column="id"/>
         <result property="wordroot" column="wordroot"/>
-        <result property="mean" column="mean"/>
+        <result property="vary" column="vary"/>
         <result property="translation" column="translation"/>
         <result property="example" column="example"/>
         <result property="category" column="category"/>
         <result property="frequency" column="frequency"/>
         <result property="note" column="note"/>
         <result property="source" column="source"/>
+        <result property="level" column="level"/>
         <result property="createdAt" column="createdAt" javaType="java.time.LocalDateTime" />
         <result property="updatedAt" column="updatedAt" javaType="java.time.LocalDateTime"  />
     </resultMap>
@@ -57,25 +58,36 @@
                         </foreach>
                     </if>
                 </if>
+                <if test="filtersJSON.level">
+                    <if test="filtersJSON.level[0]==null">
+                        level is null
+                    </if>
+                    <if test="filtersJSON.level[0]!=null">
+                        level in
+                        <foreach collection="filtersJSON.level" item="id" index="index" open="(" close=")" separator=",">
+                            #{id}
+                        </foreach>
+                    </if>
+                </if>
                 <if test="keyword!=null">
                     and
                 </if>
             </if>
             <if test="keyword!=null">
-                (wordroot like "%"#{keyword}"%" or mean like "%"#{keyword}"%" or translation like "%"#{keyword}"%")
+                (wordroot like "%"#{keyword}"%" or translation like "%"#{keyword}"%")
             </if>
         </where>
         ORDER BY wordroot
     </select>
 
     <update id="insertWordroot">
-        INSERT INTO Wordroot(wordroot,mean,translation,example,category,frequency,source,note)
-            VALUE(#{wordroot}, #{mean}, #{translation}, #{example}, #{category}, #{frequency},#{source}, #{note})
+        INSERT INTO Wordroot(wordroot,vary,translation,example,category,frequency,source,level,note)
+            VALUE(#{wordroot}, #{vary}, #{translation}, #{example}, #{category}, #{frequency}, #{source}, #{level}, #{note})
     </update>
 
     <update id="editWordroot">
         UPDATE Wordroot
-        SET wordroot=#{wordroot},mean=#{mean},translation=#{translation},example=#{example},category=#{category},frequency=#{frequency},source=#{source},note=#{note}
+        SET wordroot=#{wordroot},vary=#{vary},translation=#{translation},example=#{example},category=#{category},frequency=#{frequency},source=#{source},level=#{level},note=#{note}
         WHERE id = #{id}
     </update>
 

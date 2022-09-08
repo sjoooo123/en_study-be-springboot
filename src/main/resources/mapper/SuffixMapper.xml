@@ -11,6 +11,7 @@
         <result property="frequency" column="frequency"/>
         <result property="note" column="note"/>
         <result property="source" column="source"/>
+        <result property="level" column="level"/>
         <result property="createdAt" column="createdAt" javaType="java.time.LocalDateTime" />
         <result property="updatedAt" column="updatedAt" javaType="java.time.LocalDateTime"  />
     </resultMap>
@@ -56,6 +57,17 @@
                         </foreach>
                     </if>
                 </if>
+                <if test="filtersJSON.level">
+                    <if test="filtersJSON.level[0]==null">
+                        level is null
+                    </if>
+                    <if test="filtersJSON.level[0]!=null">
+                        level in
+                        <foreach collection="filtersJSON.level" item="id" index="index" open="(" close=")" separator=",">
+                            #{id}
+                        </foreach>
+                    </if>
+                </if>
                 <if test="keyword!=null">
                     and
                 </if>
@@ -68,13 +80,13 @@
     </select>
 
     <update id="insertSuffix">
-        INSERT INTO Suffix(affix,translation,example,category,frequency,source,note)
-            VALUE(#{affix}, #{translation}, #{example}, #{category}, #{frequency},#{source}, #{note})
+        INSERT INTO Suffix(affix,translation,example,category,frequency,source,level,note)
+            VALUE(#{affix}, #{translation}, #{example}, #{category}, #{frequency},#{source},#{level},#{note})
     </update>
 
     <update id="editSuffix">
         UPDATE Suffix
-        SET affix=#{affix}, translation=#{translation},example=#{example},category=#{category}, frequency=#{frequency}, source=#{source}, note=#{note}
+        SET affix=#{affix}, translation=#{translation},example=#{example},category=#{category}, frequency=#{frequency}, source=#{source}, level=#{level}, note=#{note}
         WHERE id = #{id}
     </update>
 
