@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.PierootMapper">
+
+    <resultMap id="PierootMapper" type="com.tencent.wxcloudrun.model.Pieroot">
+        <id property="id" column="id"/>
+        <result property="pieroot" column="pieroot"/>
+        <result property="translation" column="translation"/>
+        <result property="category" column="category"/>
+        <result property="note" column="note"/>
+        <result property="vary" column="vary"/>
+        <result property="varyDetail" column="varyDetail"/>
+        <result property="level" column="level"/>
+        <result property="createdAt" column="createdAt" javaType="java.time.LocalDateTime" />
+        <result property="updatedAt" column="updatedAt" javaType="java.time.LocalDateTime"  />
+    </resultMap>
+
+    <select id="getPierootAll" resultMap="PierootMapper" >
+        SELECT *
+        FROM Pieroot
+        ORDER BY pieroot
+    </select>
+
+    <select id="getPierootList" resultMap="PierootMapper" >
+        SELECT *
+        FROM Pieroot
+        <where>
+            <if test="filters!=null">
+                <if test="filtersJSON.vary">
+                    <if test="filtersJSON.vary[0]==null">
+                        vary is null
+                    </if>
+                    <if test="filtersJSON.vary[0]!=null">
+                        vary in
+                        <foreach collection="filtersJSON.vary" item="id" index="index" open="(" close=")" separator=",">
+                            #{id}
+                        </foreach>
+                    </if>
+                    <if test="filtersJSON.category">
+                        and
+                    </if>
+                </if>
+                <if test="filtersJSON.category">
+                    <if test="filtersJSON.category[0]==null">
+                        category is null
+                    </if>
+                    <if test="filtersJSON.category[0]!=null">
+                        category in
+                        <foreach collection="filtersJSON.category" item="id" index="index" open="(" close=")" separator=",">
+                            #{id}
+                        </foreach>
+                    </if>
+                    <if test="filtersJSON.level">
+                        and
+                    </if>
+                </if>
+                <if test="filtersJSON.level">
+                    <if test="filtersJSON.level[0]==null">
+                        level is null
+                    </if>
+                    <if test="filtersJSON.level[0]!=null">
+                        level in
+                        <foreach collection="filtersJSON.level" item="id" index="index" open="(" close=")" separator=",">
+                            #{id}
+                        </foreach>
+                    </if>
+                </if>
+                <if test="keyword!=null">
+                    and
+                </if>
+            </if>
+            <if test="keyword!=null">
+                (pieroot like "%"#{keyword}"%" or translation like "%"#{keyword}"%")
+            </if>
+        </where>
+        ORDER BY pieroot
+    </select>
+
+    <update id="insertPieroot">
+        INSERT INTO Pieroot(pieroot,translation,category,level,note, vary, varyDetail)
+            VALUE(#{pieroot}, #{translation}, #{category}, #{level}, #{note}, #{vary}, #{varyDetail})
+    </update>
+
+    <update id="editPieroot">
+        UPDATE Pieroot
+        SET pieroot=#{pieroot},translation=#{translation},category=#{category},level=#{level},note=#{note}, vary=#{vary}, varyDetail=#{varyDetail}
+        WHERE id = #{id}
+    </update>
+
+    <update id="deletePieroot" parameterType="java.lang.Integer">
+        DELETE
+        FROM Pieroot
+        WHERE id = #{id}
+    </update>
+
+</mapper>

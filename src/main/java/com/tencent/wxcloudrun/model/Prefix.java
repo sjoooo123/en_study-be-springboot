@@ -12,6 +12,8 @@ public class Prefix implements Serializable {
 
   private String affix;
 
+  private Integer pie;
+
   private String translation;
 
   private String example;

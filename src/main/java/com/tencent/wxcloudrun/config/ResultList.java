@@ -3,13 +3,13 @@ package com.tencent.wxcloudrun.config;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Optional;
+import java.util.List;
 
 @Data
 public final class ResultList {
-    private Optional list;
+    private List list;
 
-    public ResultList(@Autowired Optional list) {
+    public ResultList(@Autowired List list) {
         this.list = list;
     }
 }

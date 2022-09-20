@@ -13,6 +13,8 @@ public class Wordroot implements Serializable {
 
   private String wordroot;
 
+  private Integer pie;
+
   private String translation;
 
   private String example;

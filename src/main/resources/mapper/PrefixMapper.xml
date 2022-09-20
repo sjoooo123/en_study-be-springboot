@@ -5,6 +5,7 @@
     <resultMap id="PrefixMapper" type="com.tencent.wxcloudrun.model.Prefix">
         <id property="id" column="id"/>
         <result property="affix" column="affix"/>
+        <result property="pie" column="pie"/>
         <result property="translation" column="translation"/>
         <result property="example" column="example"/>
         <result property="category" column="category"/>
@@ -21,6 +22,20 @@
         FROM Prefix
         <where>
             <if test="filters!=null">
+                <if test="filtersJSON.pie">
+                    <if test="filtersJSON.pie[0]==null">
+                        pie is null
+                    </if>
+                    <if test="filtersJSON.pie[0]!=null">
+                        category in
+                        <foreach collection="filtersJSON.pie" item="id" index="index" open="(" close=")" separator=",">
+                            #{id}
+                        </foreach>
+                    </if>
+                    <if test="filtersJSON.category">
+                        and
+                    </if>
+                </if>
                 <if test="filtersJSON.category">
                     <if test="filtersJSON.category[0]==null">
                         category is null
@@ -80,13 +95,13 @@
     </select>
 
     <update id="insertPrefix">
-        INSERT INTO Prefix(affix,translation,example,category,frequency,source,level,note)
-            VALUE(#{affix}, #{translation}, #{example}, #{category}, #{frequency}, #{source}, #{level}, #{note})
+        INSERT INTO Prefix(affix,pie,translation,example,category,frequency,source,level,note)
+            VALUE(#{affix}, #{pie}, #{translation}, #{example}, #{category}, #{frequency}, #{source}, #{level}, #{note})
     </update>
 
     <update id="editPrefix">
         UPDATE Prefix
-        SET affix=#{affix}, translation=#{translation},example=#{example},category=#{category},frequency=#{frequency},source=#{source}, level=#{level}, note=#{note}
+        SET affix=#{affix}, pie=#{pie}, translation=#{translation},example=#{example},category=#{category},frequency=#{frequency},source=#{source}, level=#{level}, note=#{note}
         WHERE id = #{id}
     </update>
 

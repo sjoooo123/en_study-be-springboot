@@ -5,6 +5,7 @@
     <resultMap id="WordrootMapper" type="com.tencent.wxcloudrun.model.Wordroot">
         <id property="id" column="id"/>
         <result property="wordroot" column="wordroot"/>
+        <result property="pie" column="pie"/>
         <result property="vary" column="vary"/>
         <result property="translation" column="translation"/>
         <result property="example" column="example"/>
@@ -22,6 +23,20 @@
         FROM Wordroot
         <where>
             <if test="filters!=null">
+                <if test="filtersJSON.pie">
+                    <if test="filtersJSON.pie[0]==null">
+                        pie is null
+                    </if>
+                    <if test="filtersJSON.pie[0]!=null">
+                        category in
+                        <foreach collection="filtersJSON.pie" item="id" index="index" open="(" close=")" separator=",">
+                            #{id}
+                        </foreach>
+                    </if>
+                    <if test="filtersJSON.category">
+                        and
+                    </if>
+                </if>
                 <if test="filtersJSON.category">
                     <if test="filtersJSON.category[0]==null">
                         category is null
@@ -81,13 +96,13 @@
     </select>
 
     <update id="insertWordroot">
-        INSERT INTO Wordroot(wordroot,vary,translation,example,category,frequency,source,level,note)
-            VALUE(#{wordroot}, #{vary}, #{translation}, #{example}, #{category}, #{frequency}, #{source}, #{level}, #{note})
+        INSERT INTO Wordroot(wordroot, pie,vary,translation,example,category,frequency,source,level,note)
+            VALUE(#{wordroot}, #{pie}, #{vary}, #{translation}, #{example}, #{category}, #{frequency}, #{source}, #{level}, #{note})
     </update>
 
     <update id="editWordroot">
         UPDATE Wordroot
-        SET wordroot=#{wordroot},vary=#{vary},translation=#{translation},example=#{example},category=#{category},frequency=#{frequency},source=#{source},level=#{level},note=#{note}
+        SET wordroot=#{wordroot},pie=#{pie},vary=#{vary},translation=#{translation},example=#{example},category=#{category},frequency=#{frequency},source=#{source},level=#{level},note=#{note}
         WHERE id = #{id}
     </update>
 
