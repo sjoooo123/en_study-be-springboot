@@ -18,7 +18,7 @@ public class Prefix implements Serializable {
 
   private String example;
 
-  private Integer category;
+  private String category;
 
   private String frequency;
 
@@ -28,6 +28,8 @@ public class Prefix implements Serializable {
 
   // 完善程度：0未完善，1完善中，2已为完善
   private Integer level;
+
+  private String grade; // 等级
 
   private LocalDateTime createdAt;
 

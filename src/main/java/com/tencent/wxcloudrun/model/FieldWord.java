@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class Simpleword implements Serializable {
+public class FieldWord implements Serializable {
 
   private Integer id;
 
@@ -14,7 +14,7 @@ public class Simpleword implements Serializable {
 
   private String translation;
 
-  private Integer category;
+  private Integer field;
 
   private String note;
 

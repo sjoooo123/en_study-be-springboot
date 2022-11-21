@@ -9,14 +9,13 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface CategoryMapper {
+public interface WordMapper {
 
-  List<TreeItem> getCategoryList();
+  List<Word> getWordList(PageRequest request);
 
-  void insertCategory(Category category);
+  void insertWord(Word word);
 
-  void editCategory(Category category);
+  void editWord(Word word);
 
-  void deleteCategory(Integer id);
-
+  void deleteWord(Integer id);
 }

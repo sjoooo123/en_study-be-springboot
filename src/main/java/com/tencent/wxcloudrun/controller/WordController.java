@@ -6,8 +6,8 @@ import com.github.pagehelper.PageInfo;
 import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.config.ResultListPage;
 import com.tencent.wxcloudrun.dto.PageRequest;
-import com.tencent.wxcloudrun.model.Simpleword;
-import com.tencent.wxcloudrun.service.SimplewordService;
+import com.tencent.wxcloudrun.model.Word;
+import com.tencent.wxcloudrun.service.WordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * Simpleword控制器
+ * Word控制器
  */
 @RestController
 
-public class SimplewordController {
+public class WordController {
 
-  final SimplewordService simplewordService;
+  final WordService WordService;
   final Logger logger;
 
-  public SimplewordController(@Autowired SimplewordService simplewordService) {
-    this.simplewordService = simplewordService;
-    this.logger = LoggerFactory.getLogger(SimplewordController.class);
+  public WordController(@Autowired WordService WordService) {
+    this.WordService = WordService;
+    this.logger = LoggerFactory.getLogger(WordController.class);
   }
 
   /**
@@ -38,10 +38,10 @@ public class SimplewordController {
    * @param request {@link PageRequest}
    * @return API response json
    */
-  @GetMapping(value = "/api/simpleword/list")
+  @GetMapping(value = "/api/Word/list")
   ApiResponse get(PageRequest request) {
 
-    logger.info("/api/simpleword/list get request, action: {}", request);
+    logger.info("/api/Word/list get request, action: {}", request);
 
     Integer page = request.getPage();
     Integer size = request.getSize();
@@ -55,50 +55,50 @@ public class SimplewordController {
     PageHelper.startPage(page, size);
 
     // 封装分页查询结果到 PageInfo 对象中以获取相关分页信息
-    List<Simpleword> simpleword = simplewordService.getSimplewordList(request);
-    PageInfo pageInfo = new PageInfo(simpleword);
+    List<Word> word = WordService.getWordList(request);
+    PageInfo pageInfo = new PageInfo(word);
 
     return ApiResponse.ok(new ResultListPage(pageInfo.getList(), pageInfo.getTotal()));
   }
 
   /**
    * 新增
-   * @param simpleword {@link Simpleword}
+   * @param word {@link Word}
    * @return API response json
    */
-  @PostMapping(value = "/api/simpleword/add")
-  ApiResponse create(@RequestBody Simpleword simpleword) {
-    logger.info("/api/simpleword/add post request, {}", simpleword);
+  @PostMapping(value = "/api/Word/add")
+  ApiResponse create(@RequestBody Word word) {
+    logger.info("/api/Word/add post request, {}", word);
 
-    simplewordService.insertSimpleword(simpleword);
+    WordService.insertWord(word);
 
     return ApiResponse.ok();
   }
 
   /**
    * 修改
-   * @param simpleword {@link Simpleword}
+   * @param word {@link Word}
    * @return API response json
    */
-  @PostMapping(value = "/api/simpleword/edit")
-  ApiResponse edit(@RequestBody Simpleword simpleword) {
-    logger.info("/api/simpleword/edit post request, {}", simpleword);
+  @PostMapping(value = "/api/Word/edit")
+  ApiResponse edit(@RequestBody Word word) {
+    logger.info("/api/Word/edit post request, {}", word);
 
-    simplewordService.editSimpleword(simpleword);
+    WordService.editWord(word);
 
     return ApiResponse.ok();
   }
 
   /**
    * 删除
-   * @param simpleword {@link Simpleword}
+   * @param word {@link Word}
    * @return API response json
    */
-  @PostMapping(value = "/api/simpleword/delete")
-  ApiResponse delete(@RequestBody Simpleword simpleword) {
-    logger.info("/api/simpleword/delete post request, {}", simpleword);
+  @PostMapping(value = "/api/Word/delete")
+  ApiResponse delete(@RequestBody Word word) {
+    logger.info("/api/Word/delete post request, {}", word);
 
-    simplewordService.deleteSimpleword(simpleword.getId());
+    WordService.deleteWord(word.getId());
 
     return ApiResponse.ok();
   }

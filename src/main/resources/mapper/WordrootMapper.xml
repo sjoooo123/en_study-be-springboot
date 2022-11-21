@@ -14,6 +14,7 @@
         <result property="note" column="note"/>
         <result property="source" column="source"/>
         <result property="level" column="level"/>
+        <result property="grade" column="grade"/>
         <result property="createdAt" column="createdAt" javaType="java.time.LocalDateTime" />
         <result property="updatedAt" column="updatedAt" javaType="java.time.LocalDateTime"  />
     </resultMap>
@@ -23,12 +24,26 @@
         FROM Wordroot
         <where>
             <if test="filters!=null">
+                <if test="filtersJSON.grade">
+                    <if test="filtersJSON.grade[0]==null">
+                        grade is null
+                    </if>
+                    <if test="filtersJSON.grade[0]!=null">
+                        grade in
+                        <foreach collection="filtersJSON.grade" item="id" index="index" open="(" close=")" separator=",">
+                            #{id}
+                        </foreach>
+                    </if>
+                    <if test="filtersJSON.pie">
+                        and
+                    </if>
+                </if>
                 <if test="filtersJSON.pie">
                     <if test="filtersJSON.pie[0]==null">
                         pie is null
                     </if>
                     <if test="filtersJSON.pie[0]!=null">
-                        category in
+                        pie in
                         <foreach collection="filtersJSON.pie" item="id" index="index" open="(" close=")" separator=",">
                             #{id}
                         </foreach>
@@ -96,13 +111,13 @@
     </select>
 
     <update id="insertWordroot">
-        INSERT INTO Wordroot(wordroot, pie,vary,translation,example,category,frequency,source,level,note)
-            VALUE(#{wordroot}, #{pie}, #{vary}, #{translation}, #{example}, #{category}, #{frequency}, #{source}, #{level}, #{note})
+        INSERT INTO Wordroot(wordroot, pie,vary,translation,example,category,frequency,source,level,grade,note)
+            VALUE(#{wordroot}, #{pie}, #{vary}, #{translation}, #{example}, #{category}, #{frequency}, #{source}, #{level}, #{grade}, #{note})
     </update>
 
     <update id="editWordroot">
         UPDATE Wordroot
-        SET wordroot=#{wordroot},pie=#{pie},vary=#{vary},translation=#{translation},example=#{example},category=#{category},frequency=#{frequency},source=#{source},level=#{level},note=#{note}
+        SET wordroot=#{wordroot},pie=#{pie},vary=#{vary},translation=#{translation},example=#{example},category=#{category},frequency=#{frequency},source=#{source},level=#{level},grade=#{grade},note=#{note}
         WHERE id = #{id}
     </update>
 

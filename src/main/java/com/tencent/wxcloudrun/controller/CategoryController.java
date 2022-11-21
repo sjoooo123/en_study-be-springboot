@@ -1,9 +1,6 @@
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
-import com.tencent.wxcloudrun.config.ResultList;
-import com.tencent.wxcloudrun.dto.CounterRequest;
-import com.tencent.wxcloudrun.model.Category;
 import com.tencent.wxcloudrun.model.Category;
 import com.tencent.wxcloudrun.model.TreeItem;
 import com.tencent.wxcloudrun.service.CategoryService;
@@ -16,9 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Category控制器

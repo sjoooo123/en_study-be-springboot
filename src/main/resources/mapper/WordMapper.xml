@@ -1,22 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tencent.wxcloudrun.dao.SimplewordMapper">
+<mapper namespace="com.tencent.wxcloudrun.dao.WordMapper">
 
-    <resultMap id="SimplewordMapper" type="com.tencent.wxcloudrun.model.Simpleword">
+    <resultMap id="WordMapper" type="com.tencent.wxcloudrun.model.Word">
         <id property="id" column="id"/>
         <result property="word" column="word"/>
+        <result property="phonetic" column="phonetic"/>
         <result property="translation" column="translation"/>
         <result property="category" column="category"/>
+        <result property="grade" column="grade"/>
+        <result property="commonlevel" column="commonlevel"/>
         <result property="note" column="note"/>
         <result property="createdAt" column="createdAt" javaType="java.time.LocalDateTime" />
         <result property="updatedAt" column="updatedAt" javaType="java.time.LocalDateTime"  />
     </resultMap>
 
-    <select id="getSimplewordList" resultMap="SimplewordMapper" >
+    <select id="getWordList" resultMap="WordMapper" >
         SELECT *
-        FROM Simpleword
+        FROM Word
         <where>
             <if test="filters!=null">
+                <if test="filtersJSON.grade">
+                    <if test="filtersJSON.grade[0]==null">
+                        grade is null
+                    </if>
+                    <if test="filtersJSON.grade[0]!=null">
+                        grade in
+                        <foreach collection="filtersJSON.grade" item="id" index="index" open="(" close=")" separator=",">
+                            #{id}
+                        </foreach>
+                    </if>
+                    <if test="filtersJSON.category">
+                        and
+                    </if>
+                </if>
                 <if test="filtersJSON.category">
                     <if test="filtersJSON.category[0]==null">
                         category is null
@@ -39,20 +56,20 @@
         ORDER BY word
     </select>
 
-    <update id="insertSimpleword">
-        INSERT INTO Simpleword(word,translation,category,note)
-            VALUE(#{word}, #{translation}, #{category}, #{note})
+    <update id="insertWord">
+        INSERT INTO Word(word,phonetic,translation,category,grade,commonlevel,note)
+            VALUE(#{word}, #{phonetic}, #{translation}, #{category}, #{grade}, #{commonlevel}, #{note})
     </update>
 
-    <update id="editSimpleword">
-        UPDATE Simpleword
-        SET word=#{word}, translation=#{translation},category=#{category},note=#{note}
+    <update id="editWord">
+        UPDATE Word
+        SET word=#{word}, phonetic=#{phonetic}, translation=#{translation},category=#{category},grade=#{grade}, commonlevel=#{commonlevel}, note=#{note}
         WHERE id = #{id}
     </update>
 
-    <update id="deleteSimpleword" parameterType="java.lang.Integer">
+    <update id="deleteWord" parameterType="java.lang.Integer">
         DELETE
-        FROM Simpleword
+        FROM Word
         WHERE id = #{id}
     </update>
 
