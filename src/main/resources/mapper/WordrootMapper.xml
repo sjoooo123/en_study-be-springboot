@@ -19,6 +19,12 @@
         <result property="updatedAt" column="updatedAt" javaType="java.time.LocalDateTime"  />
     </resultMap>
 
+    <select id="getAll" resultMap="WordrootMapper" >
+        SELECT *
+        FROM Wordroot
+        ORDER BY wordroot
+    </select>
+
     <select id="getWordrootList" resultMap="WordrootMapper" >
         SELECT *
         FROM Wordroot

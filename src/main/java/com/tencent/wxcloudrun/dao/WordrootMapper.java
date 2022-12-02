@@ -9,6 +9,8 @@ import java.util.List;
 @Mapper
 public interface WordrootMapper {
 
+  List<Wordroot> getAll();
+
   List<Wordroot> getWordrootList(PageRequest request);
 
   Integer getWordrootListCount(PageRequest request);
@@ -18,4 +20,5 @@ public interface WordrootMapper {
   void editWordroot(Wordroot wordroot);
 
   void deleteWordroot(Integer id);
+
 }

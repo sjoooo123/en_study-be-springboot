@@ -4,10 +4,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tencent.wxcloudrun.config.ApiResponse;
+import com.tencent.wxcloudrun.config.ResultList;
 import com.tencent.wxcloudrun.config.ResultListPage;
 import com.tencent.wxcloudrun.dto.PageRequest;
 import com.tencent.wxcloudrun.model.Prefix;
 import com.tencent.wxcloudrun.model.Suffix;
+import com.tencent.wxcloudrun.model.Wordroot;
 import com.tencent.wxcloudrun.service.PrefixService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +34,22 @@ public class PrefixController {
   public PrefixController(@Autowired PrefixService prefixService) {
     this.prefixService = prefixService;
     this.logger = LoggerFactory.getLogger(PrefixController.class);
+  }
+
+  /**
+   * 全量列表
+   *
+   * @return API response json
+   */
+  @GetMapping(value = "/api/prefix/all")
+  ApiResponse get() {
+
+    logger.info("/api/prefix/all get request");
+
+    // 封装分页查询结果到 PageInfo 对象中以获取相关分页信息
+    List<Prefix> data = prefixService.getAll();
+
+    return ApiResponse.ok(new ResultList(data));
   }
 
   /**

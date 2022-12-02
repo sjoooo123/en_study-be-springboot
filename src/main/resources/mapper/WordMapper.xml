@@ -8,8 +8,13 @@
         <result property="phonetic" column="phonetic"/>
         <result property="translation" column="translation"/>
         <result property="category" column="category"/>
+        <result property="pie" column="pie"/>
+        <result property="root" column="root"/>
+        <result property="prefix" column="prefix"/>
+        <result property="suffix" column="suffix"/>
+        <result property="memskill" column="memskill"/>
         <result property="grade" column="grade"/>
-        <result property="commonlevel" column="commonlevel"/>
+        <result property="level" column="level"/>
         <result property="note" column="note"/>
         <result property="createdAt" column="createdAt" javaType="java.time.LocalDateTime" />
         <result property="updatedAt" column="updatedAt" javaType="java.time.LocalDateTime"  />
@@ -57,13 +62,13 @@
     </select>
 
     <update id="insertWord">
-        INSERT INTO Word(word,phonetic,translation,category,grade,commonlevel,note)
-            VALUE(#{word}, #{phonetic}, #{translation}, #{category}, #{grade}, #{commonlevel}, #{note})
+        INSERT INTO Word(word,phonetic,translation,category, pie, root, prefix, suffix, memskill, grade,level,note)
+            VALUE(#{word}, #{phonetic}, #{translation}, #{category}, #{pie}, #{root}, #{prefix}, #{suffix}, #{memskill}, #{grade}, #{level}, #{note})
     </update>
 
     <update id="editWord">
         UPDATE Word
-        SET word=#{word}, phonetic=#{phonetic}, translation=#{translation},category=#{category},grade=#{grade}, commonlevel=#{commonlevel}, note=#{note}
+        SET word=#{word}, phonetic=#{phonetic}, translation=#{translation},category=#{category},pie=#{pie},root=#{root},prefix=#{prefix},suffix=#{suffix},memskill=#{memskill},grade=#{grade}, level=#{level}, note=#{note}
         WHERE id = #{id}
     </update>
 

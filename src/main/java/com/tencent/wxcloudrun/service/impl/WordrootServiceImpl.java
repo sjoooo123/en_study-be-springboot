@@ -20,6 +20,11 @@ public class WordrootServiceImpl implements WordrootService {
   }
 
   @Override
+  public List<Wordroot> getAll() {
+    return wordrootMapper.getAll();
+  }
+
+  @Override
   public List<Wordroot> getWordrootList(PageRequest request) {
     return wordrootMapper.getWordrootList(request);
   }

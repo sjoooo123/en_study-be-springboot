@@ -18,6 +18,12 @@
         <result property="updatedAt" column="updatedAt" javaType="java.time.LocalDateTime"  />
     </resultMap>
 
+    <select id="getAll" resultMap="SuffixMapper" >
+        SELECT *
+        FROM Suffix
+        ORDER BY affix
+    </select>
+
     <select id="getSuffixList" resultMap="SuffixMapper" >
         SELECT *
         FROM Suffix

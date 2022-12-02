@@ -2,6 +2,7 @@ package com.tencent.wxcloudrun.service.impl;
 
 import com.tencent.wxcloudrun.dao.SuffixMapper;
 import com.tencent.wxcloudrun.dto.PageRequest;
+import com.tencent.wxcloudrun.model.Prefix;
 import com.tencent.wxcloudrun.model.Suffix;
 import com.tencent.wxcloudrun.service.SuffixService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,11 @@ public class SuffixServiceImpl implements SuffixService {
 
   public SuffixServiceImpl(@Autowired SuffixMapper suffixMapper) {
     this.suffixMapper = suffixMapper;
+  }
+
+  @Override
+  public List<Suffix> getAll() {
+    return suffixMapper.getAll();
   }
 
   @Override

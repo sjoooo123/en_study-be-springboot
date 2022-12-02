@@ -3,6 +3,7 @@ package com.tencent.wxcloudrun.service.impl;
 import com.tencent.wxcloudrun.dao.PrefixMapper;
 import com.tencent.wxcloudrun.dto.PageRequest;
 import com.tencent.wxcloudrun.model.Prefix;
+import com.tencent.wxcloudrun.model.Wordroot;
 import com.tencent.wxcloudrun.service.PrefixService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,11 @@ public class PrefixServiceImpl implements PrefixService {
 
   public PrefixServiceImpl(@Autowired PrefixMapper prefixMapper) {
     this.prefixMapper = prefixMapper;
+  }
+
+  @Override
+  public List<Prefix> getAll() {
+    return prefixMapper.getAll();
   }
 
   @Override

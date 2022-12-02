@@ -18,6 +18,12 @@
         <result property="updatedAt" column="updatedAt" javaType="java.time.LocalDateTime"  />
     </resultMap>
 
+    <select id="getAll" resultMap="PrefixMapper" >
+        SELECT *
+        FROM Prefix
+        ORDER BY affix
+    </select>
+
     <select id="getPrefixList" resultMap="PrefixMapper" >
         SELECT *
         FROM Prefix

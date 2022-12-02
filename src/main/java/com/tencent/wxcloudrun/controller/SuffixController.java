@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tencent.wxcloudrun.config.ApiResponse;
+import com.tencent.wxcloudrun.config.ResultList;
 import com.tencent.wxcloudrun.config.ResultListPage;
 import com.tencent.wxcloudrun.dto.PageRequest;
+import com.tencent.wxcloudrun.model.Prefix;
 import com.tencent.wxcloudrun.model.Suffix;
 import com.tencent.wxcloudrun.model.Wordroot;
 import com.tencent.wxcloudrun.service.SuffixService;
@@ -32,6 +34,22 @@ public class SuffixController {
   public SuffixController(@Autowired SuffixService suffixService) {
     this.suffixService = suffixService;
     this.logger = LoggerFactory.getLogger(SuffixController.class);
+  }
+
+  /**
+   * 全量列表
+   *
+   * @return API response json
+   */
+  @GetMapping(value = "/api/suffix/all")
+  ApiResponse get() {
+
+    logger.info("/api/suffix/all get request");
+
+    // 封装分页查询结果到 PageInfo 对象中以获取相关分页信息
+    List<Suffix> data = suffixService.getAll();
+
+    return ApiResponse.ok(new ResultList(data));
   }
 
   /**

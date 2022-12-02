@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tencent.wxcloudrun.config.ApiResponse;
+import com.tencent.wxcloudrun.config.ResultList;
 import com.tencent.wxcloudrun.config.ResultListPage;
 import com.tencent.wxcloudrun.dto.PageRequest;
+import com.tencent.wxcloudrun.model.Pieroot;
 import com.tencent.wxcloudrun.model.Wordroot;
 import com.tencent.wxcloudrun.service.WordrootService;
 import org.slf4j.Logger;
@@ -28,6 +30,22 @@ public class WordrootController {
     public WordrootController(@Autowired WordrootService wordrootService) {
         this.wordrootService = wordrootService;
         this.logger = LoggerFactory.getLogger(WordrootController.class);
+    }
+
+    /**
+     * 全量列表
+     *
+     * @return API response json
+     */
+    @GetMapping(value = "/api/wordroot/all")
+    ApiResponse get() {
+
+        logger.info("/api/wordroot/all get request");
+
+        // 封装分页查询结果到 PageInfo 对象中以获取相关分页信息
+        List<Wordroot> wordroot = wordrootService.getAll();
+
+        return ApiResponse.ok(new ResultList(wordroot));
     }
 
     /**

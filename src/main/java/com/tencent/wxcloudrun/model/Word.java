@@ -19,9 +19,19 @@ public class Word implements Serializable {
 
   private Integer category;
 
+  private String pie;
+
+  private String root;
+
+  private String prefix;
+
+  private String suffix;
+
+  private String memskill;
+
   private String grade; // 等级
 
-  private String commonlevel;
+  private String level;
 
   private String note;
 
