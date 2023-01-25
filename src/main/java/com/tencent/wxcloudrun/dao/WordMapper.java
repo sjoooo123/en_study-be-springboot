@@ -11,6 +11,7 @@ import java.util.List;
 @Mapper
 public interface WordMapper {
 
+  List<Word> getAll();
   List<Word> getWordList(PageRequest request);
 
   void insertWord(Word word);

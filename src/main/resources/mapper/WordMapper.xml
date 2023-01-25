@@ -12,6 +12,7 @@
         <result property="root" column="root"/>
         <result property="prefix" column="prefix"/>
         <result property="suffix" column="suffix"/>
+        <result property="simWord" column="simWord"/>
         <result property="memskill" column="memskill"/>
         <result property="grade" column="grade"/>
         <result property="level" column="level"/>
@@ -19,6 +20,12 @@
         <result property="createdAt" column="createdAt" javaType="java.time.LocalDateTime" />
         <result property="updatedAt" column="updatedAt" javaType="java.time.LocalDateTime"  />
     </resultMap>
+
+    <select id="getAll" resultMap="WordMapper" >
+        SELECT *
+        FROM Word
+        ORDER BY word
+    </select>
 
     <select id="getWordList" resultMap="WordMapper" >
         SELECT *
@@ -62,13 +69,13 @@
     </select>
 
     <update id="insertWord">
-        INSERT INTO Word(word,phonetic,translation,category, pie, root, prefix, suffix, memskill, grade,level,note)
-            VALUE(#{word}, #{phonetic}, #{translation}, #{category}, #{pie}, #{root}, #{prefix}, #{suffix}, #{memskill}, #{grade}, #{level}, #{note})
+        INSERT INTO Word(word,phonetic,translation,category, pie, root, simWord, prefix, suffix, memskill, grade,level,note)
+            VALUE(#{word}, #{phonetic}, #{translation}, #{category}, #{pie}, #{root}, #{simWord}, #{prefix}, #{suffix}, #{memskill}, #{grade}, #{level}, #{note})
     </update>
 
     <update id="editWord">
         UPDATE Word
-        SET word=#{word}, phonetic=#{phonetic}, translation=#{translation},category=#{category},pie=#{pie},root=#{root},prefix=#{prefix},suffix=#{suffix},memskill=#{memskill},grade=#{grade}, level=#{level}, note=#{note}
+        SET word=#{word}, phonetic=#{phonetic}, translation=#{translation},category=#{category},pie=#{pie},root=#{root},simWord=#{simWord},prefix=#{prefix},suffix=#{suffix},memskill=#{memskill},grade=#{grade}, level=#{level}, note=#{note}
         WHERE id = #{id}
     </update>
 

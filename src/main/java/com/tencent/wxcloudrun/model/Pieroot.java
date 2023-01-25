@@ -14,6 +14,10 @@ public class Pieroot implements Serializable {
 
   private String translation;
 
+  private String type;
+
+  private String chainInfo;
+
   private Integer category;
 
   private String note;
@@ -21,9 +25,6 @@ public class Pieroot implements Serializable {
   private String vary;
 
   private String varyDetail;
-
-  // 完善程度：0未完善，1完善中，2已为完善
-  private Integer level;
 
   private LocalDateTime createdAt;
 

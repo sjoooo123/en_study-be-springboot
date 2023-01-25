@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tencent.wxcloudrun.config.ApiResponse;
+import com.tencent.wxcloudrun.config.ResultList;
 import com.tencent.wxcloudrun.config.ResultListPage;
 import com.tencent.wxcloudrun.dto.PageRequest;
 import com.tencent.wxcloudrun.model.Word;
+import com.tencent.wxcloudrun.model.Wordroot;
 import com.tencent.wxcloudrun.service.WordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +33,22 @@ public class WordController {
   public WordController(@Autowired WordService WordService) {
     this.WordService = WordService;
     this.logger = LoggerFactory.getLogger(WordController.class);
+  }
+
+  /**
+   * 全量列表
+   *
+   * @return API response json
+   */
+  @GetMapping(value = "/api/word/all")
+  ApiResponse get() {
+
+    logger.info("/api/word/all get request");
+
+    // 封装分页查询结果到 PageInfo 对象中以获取相关分页信息
+    List<Word> word = WordService.getAll();
+
+    return ApiResponse.ok(new ResultList(word));
   }
 
   /**

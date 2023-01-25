@@ -6,11 +6,12 @@
         <id property="id" column="id"/>
         <result property="pieroot" column="pieroot"/>
         <result property="translation" column="translation"/>
+        <result property="type" column="type"/>
+        <result property="chainInfo" column="chainInfo"/>
         <result property="category" column="category"/>
         <result property="note" column="note"/>
         <result property="vary" column="vary"/>
         <result property="varyDetail" column="varyDetail"/>
-        <result property="level" column="level"/>
         <result property="createdAt" column="createdAt" javaType="java.time.LocalDateTime" />
         <result property="updatedAt" column="updatedAt" javaType="java.time.LocalDateTime"  />
     </resultMap>
@@ -50,20 +51,6 @@
                             #{id}
                         </foreach>
                     </if>
-                    <if test="filtersJSON.level">
-                        and
-                    </if>
-                </if>
-                <if test="filtersJSON.level">
-                    <if test="filtersJSON.level[0]==null">
-                        level is null
-                    </if>
-                    <if test="filtersJSON.level[0]!=null">
-                        level in
-                        <foreach collection="filtersJSON.level" item="id" index="index" open="(" close=")" separator=",">
-                            #{id}
-                        </foreach>
-                    </if>
                 </if>
                 <if test="keyword!=null">
                     and
@@ -77,13 +64,13 @@
     </select>
 
     <update id="insertPieroot">
-        INSERT INTO Pieroot(pieroot,translation,category,level,note, vary, varyDetail)
-            VALUE(#{pieroot}, #{translation}, #{category}, #{level}, #{note}, #{vary}, #{varyDetail})
+        INSERT INTO Pieroot(pieroot,translation,type,chainInfo,category,note, vary, varyDetail)
+            VALUE(#{pieroot}, #{translation}, #{type}, #{chainInfo}, #{category}, #{note}, #{vary}, #{varyDetail})
     </update>
 
     <update id="editPieroot">
         UPDATE Pieroot
-        SET pieroot=#{pieroot},translation=#{translation},category=#{category},level=#{level},note=#{note}, vary=#{vary}, varyDetail=#{varyDetail}
+        SET pieroot=#{pieroot},translation=#{translation},type=#{type},chainInfo=#{chainInfo},category=#{category},note=#{note}, vary=#{vary}, varyDetail=#{varyDetail}
         WHERE id = #{id}
     </update>
 

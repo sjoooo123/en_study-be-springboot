@@ -4,6 +4,7 @@ import com.tencent.wxcloudrun.dao.CategoryMapper;
 import com.tencent.wxcloudrun.dao.WordMapper;
 import com.tencent.wxcloudrun.dto.PageRequest;
 import com.tencent.wxcloudrun.model.Word;
+import com.tencent.wxcloudrun.model.Wordroot;
 import com.tencent.wxcloudrun.service.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,11 @@ public class WordServiceImpl implements WordService {
 
   public WordServiceImpl(@Autowired WordMapper WordMapper) {
     this.WordMapper = WordMapper;
+  }
+
+  @Override
+  public List<Word> getAll() {
+    return WordMapper.getAll();
   }
 
   @Override

@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface WordService {
 
+  List<Word> getAll();
+
   List<Word> getWordList(PageRequest request);
 
   void insertWord(Word word);

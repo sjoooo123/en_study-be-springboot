@@ -23,6 +23,8 @@ public class Word implements Serializable {
 
   private String root;
 
+  private String simWord; // 包含简单词
+
   private String prefix;
 
   private String suffix;
